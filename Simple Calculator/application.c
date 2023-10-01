@@ -94,10 +94,23 @@ uint8 counter = 0;
             case '*' : 
                 ret = convert_uint32_to_string((number1 * number2), result);
                 break;    
-            case '/' : 
-                ret = convert_uint32_to_string((number1 / number2), result);
-                break;
+            case '/' :
+				if ( number2 == 0)
+				{
+					lcd_4bit_send_command(&lcd_1,_LCD_CLEAR) ;
+					lcd_4bit_send_string_pos (&lcd_1, 3 , 7,  "Math Error" ) ;
+                     __delay_ms(3000);
+                    lcd_4bit_send_command(&lcd_1,_LCD_CLEAR) ;
+					continue;
+				}
+				else
+				{
+					ret = convert_uint32_to_string((number1 / number2), result);
+				}
+				break;
   
+                
+                
         }
         
         ret = lcd_4bit_send_string_pos(&lcd_1, 1, counter2+2, result);
